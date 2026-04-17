@@ -306,23 +306,23 @@
 
         <section class="intro">
             <h2>Tiga Level Kuis Matematika</h2>
-            <p>Pilih level yang sesuai: <strong>Mudah</strong>, <strong>Sedang</strong>, atau <strong>Sulit</strong>. Setiap level berisi 10 soal perkalian dan pembagian dengan cerita singkat sebagai stimulus agar belajar matematika lebih bermakna.</p>
+            <p>Pilih level yang sesuai: <strong>Mudah</strong>, <strong>Sedang</strong>, atau <strong>Sulit</strong>. Setiap level berisi 20 soal (10 perkalian dan 10 pembagian) dengan cerita singkat sebagai stimulus agar belajar matematika lebih bermakna.</p>
         </section>
 
         <section class="levels" id="levelSelection">
             <article class="level-card">
                 <h3>Level Mudah</h3>
-                <p>10 soal perkalian dan pembagian dengan angka kecil dan cerita sederhana.</p>
+                <p>20 soal (10 perkalian dan 10 pembagian) dengan angka kecil dan cerita sederhana.</p>
                 <button class="btn-level" onclick="selectLevel('Mudah')">Pilih Level Mudah</button>
             </article>
             <article class="level-card">
                 <h3>Level Sedang</h3>
-                <p>10 soal perkalian dan pembagian dengan sedikit angka lebih besar dan stimulus cerita yang menantang.</p>
+                <p>20 soal (10 perkalian dan 10 pembagian) dengan sedikit angka lebih besar dan stimulus cerita yang menantang.</p>
                 <button class="btn-level" onclick="selectLevel('Sedang')">Pilih Level Sedang</button>
             </article>
             <article class="level-card">
                 <h3>Level Sulit</h3>
-                <p>10 soal perkalian dan pembagian dengan angka lebih besar dan cerita yang membutuhkan pemikiran lebih matang.</p>
+                <p>20 soal (10 perkalian dan 10 pembagian) dengan angka lebih besar dan cerita yang membutuhkan pemikiran lebih matang.</p>
                 <button class="btn-level" onclick="selectLevel('Sulit')">Pilih Level Sulit</button>
             </article>
         </section>
@@ -340,7 +340,7 @@
                     </div>
                     <div class="stat">
                         <strong>Soal</strong>
-                        <span id="questionCount">0 / 10</span>
+                        <span id="questionCount">0 / 20</span>
                     </div>
                     <div class="stat">
                         <strong>Benar</strong>
@@ -425,7 +425,7 @@
             }
         };
 
-        const questionCount = 10;
+        const questionCount = 20;
         let currentLevel = null;
         let questions = [];
         let currentIndex = 0;
