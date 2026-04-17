@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MI SUNAN GIRI SURABAYA - Game MTK Anak SD</title>
+    <style>
+        :root {
+            --primary: #3f8cff;
+            --secondary: #ff9f43;
+            --accent: #2dc26b;
+            --bg: #eef6ff;
+            --card: #ffffff;
+            --text: #1e2a44;
+            --shadow: 0 20px 40px rgba(63, 140, 255, 0.14);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(180deg, #eef6ff 0%, #ffffff 100%);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        .page {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .brand img {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .brand span {
+            display: grid;
+            place-items: center;
+            width: 46px;
+            height: 46px;
+            border-radius: 16px;
+            background: var(--accent);
+            color: white;
+            font-weight: 800;
+            box-shadow: 0 12px 30px rgba(45, 194, 107, 0.28);
+        }
+
+        .brand h1 {
+            font-size: 1.5rem;
+        }
+
+        .btn-primary,
+        .btn-secondary,
+        .btn-level {
+            border: none;
+            border-radius: 999px;
+            padding: 14px 20px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 16px 32px rgba(63, 140, 255, 0.25);
+        }
+
+        .btn-secondary {
+            background: #ffffff;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-level {
+            width: 100%;
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-primary:hover,
+        .btn-secondary:hover,
+        .btn-level:hover {
+            transform: translateY(-2px);
+        }
+
+        .intro {
+            background: white;
+            border-radius: 28px;
+            padding: 28px 32px;
+            box-shadow: var(--shadow);
+            margin-bottom: 26px;
+        }
+
+        .intro h2 {
+            font-size: clamp(1.9rem, 3vw, 2.6rem);
+            margin-bottom: 14px;
+        }
+
+        .intro p {
+            color: #4d637a;
+            line-height: 1.8;
+        }
+
+        .levels {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 28px;
+        }
+
+        .level-card {
+            background: white;
+            border-radius: 28px;
+            padding: 22px;
+            box-shadow: var(--shadow);
+            display: grid;
+            gap: 16px;
+            border: 1px solid transparent;
+            transition: border-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .level-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(63, 140, 255, 0.18);
+        }
+
+        .level-card h3 {
+            font-size: 1.25rem;
+        }
+
+        .level-card p {
+            color: #556a84;
+            line-height: 1.7;
+        }
+
+        .game-panel,
+        .completed {
+            display: none;
+            background: white;
+            border-radius: 30px;
+            padding: 28px;
+            box-shadow: var(--shadow);
+            margin-bottom: 24px;
+            gap: 22px;
+        }
+
+        .game-panel.active,
+        .completed.active {
+            display: grid;
+        }
+
+        .game-header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 18px;
+            align-items: center;
+        }
+
+        .game-header div {
+            min-width: 150px;
+        }
+
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .stat {
+            background: #f5faff;
+            border-radius: 22px;
+            padding: 18px 20px;
+            min-width: 130px;
+            box-shadow: inset 0 0 0 1px rgba(63, 140, 255, 0.08);
+            text-align: center;
+        }
+
+        .stat strong {
+            display: block;
+            margin-bottom: 6px;
+            color: #596f88;
+        }
+
+        .stat span {
+            display: block;
+            font-size: 1.8rem;
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        .question-box {
+            background: #f5faff;
+            border-radius: 28px;
+            padding: 28px;
+            border: 1px solid rgba(63, 140, 255, 0.14);
+        }
+
+        .question-box h3 {
+            margin-bottom: 16px;
+            font-size: 1.45rem;
+            color: #10224d;
+        }
+
+        .question-box p {
+            margin-bottom: 14px;
+            color: #4d637a;
+            line-height: 1.75;
+        }
+
+        .choices {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .choice-btn {
+            background: white;
+            border: 2px solid transparent;
+            border-radius: 20px;
+            padding: 18px;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1e3357;
+            cursor: pointer;
+            transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+        }
+
+        .choice-btn:hover {
+            transform: translateY(-1px);
+            border-color: var(--accent);
+            background: #eefdf4;
+        }
+
+        .choice-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .feedback {
+            background: #ffffff;
+            border-radius: 22px;
+            padding: 18px 20px;
+            border: 1px solid rgba(63, 140, 255, 0.14);
+            color: #2d4a6b;
+            font-weight: 700;
+        }
+
+        .completed h3 {
+            font-size: 1.7rem;
+            color: #0f4f2d;
+        }
+
+        .completed p {
+            color: #32555d;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 900px) {
+            .levels {
+                grid-template-columns: 1fr;
+            }
+
+            .choices {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="page">
+        <header>
+            <div class="brand">
+                <img src="logo mi.png" alt="Logo MI">
+                <span>MTK</span>
+                <div>
+                    <p style="font-size: .95rem; color: #718096; margin-bottom: 4px;">Game Edukatif SD</p>
+                    <h1>MI SUNAN GIRI SURABAYA</h1>
+                </div>
+            </div>
+            <button class="btn-secondary" onclick="resetGame(true)">Ubah Level</button>
+        </header>
+
+        <section class="intro">
+            <h2>Tiga Level Kuis Matematika</h2>
+            <p>Pilih level yang sesuai: <strong>Mudah</strong>, <strong>Sedang</strong>, atau <strong>Sulit</strong>. Setiap level berisi 10 soal perkalian dan pembagian dengan cerita singkat sebagai stimulus agar belajar matematika lebih bermakna.</p>
+        </section>
+
+        <section class="levels" id="levelSelection">
+            <article class="level-card">
+                <h3>Level Mudah</h3>
+                <p>10 soal perkalian dan pembagian dengan angka kecil dan cerita sederhana.</p>
+                <button class="btn-level" onclick="selectLevel('Mudah')">Pilih Level Mudah</button>
+            </article>
+            <article class="level-card">
+                <h3>Level Sedang</h3>
+                <p>10 soal perkalian dan pembagian dengan sedikit angka lebih besar dan stimulus cerita yang menantang.</p>
+                <button class="btn-level" onclick="selectLevel('Sedang')">Pilih Level Sedang</button>
+            </article>
+            <article class="level-card">
+                <h3>Level Sulit</h3>
+                <p>10 soal perkalian dan pembagian dengan angka lebih besar dan cerita yang membutuhkan pemikiran lebih matang.</p>
+                <button class="btn-level" onclick="selectLevel('Sulit')">Pilih Level Sulit</button>
+            </article>
+        </section>
+
+        <section class="game-panel" id="gamePanel">
+            <div class="game-header">
+                <div>
+                    <div style="color:#556a84;font-weight:700;letter-spacing:.02em;">Level</div>
+                    <div id="selectedLevel" style="font-size:1.45rem;color:#10224d;font-weight:800;">-</div>
+                </div>
+                <div class="stats">
+                    <div class="stat">
+                        <strong>Skor</strong>
+                        <span id="score">0</span>
+                    </div>
+                    <div class="stat">
+                        <strong>Soal</strong>
+                        <span id="questionCount">0 / 10</span>
+                    </div>
+                    <div class="stat">
+                        <strong>Benar</strong>
+                        <span id="correctCount">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-box">
+                <p class="progress" id="progressText">Pilih level untuk mulai kuis.</p>
+                <h3 id="questionText">Siap menjawab semua soal cerita matematika?</h3>
+                <div class="choices">
+                    <button class="choice-btn" id="choice0" onclick="chooseAnswer(0)">-</button>
+                    <button class="choice-btn" id="choice1" onclick="chooseAnswer(1)">-</button>
+                    <button class="choice-btn" id="choice2" onclick="chooseAnswer(2)">-</button>
+                    <button class="choice-btn" id="choice3" onclick="chooseAnswer(3)">-</button>
+                </div>
+            </div>
+
+            <div class="feedback" id="feedbackText">Semua soal dilengkapi cerita singkat supaya kamu belajar sambil berpikir.</div>
+        </section>
+
+        <section class="completed" id="completedPanel">
+            <h3>Hebat! Kamu sudah menyelesaikan Level.</h3>
+            <p id="finalMessage">Selesaikan level untuk melihat hasil akhir.</p>
+            <button class="btn-primary" onclick="resetGame(false)">Pilih Level Lagi</button>
+        </section>
+    </main>
+
+    <script>
+        // script.js - Logika Quiz Matematika Anak SD dengan Level dan Stimulus Literasi
+
+        const levelConfig = {
+            Mudah: {
+                label: 'Level Mudah',
+                multiplier: { min: 1, max: 6 },
+                divisor: { min: 1, max: 6 },
+                story: {
+                    multiply: [
+                        'Rina memiliki {a} kotak kue, setiap kotak berisi {b} kue. Berapa total kue yang dimiliki Rina?',
+                        'Pak Budi menata {a} baris pensil, setiap baris terdiri dari {b} pensil. Berapa pensil semuanya?',
+                        'Sebuah rak memiliki {a} kotak mainan, di dalam setiap kotak ada {b} bola. Berapa bola total pada rak tersebut?'
+                    ],
+                    divide: [
+                        'Tono memiliki {a} buah apel dan membaginya ke dalam {b} piring sama rata. Berapa apel di setiap piring?',
+                        'Maya membuat {a} kue dan ingin membagi ke {b} teman sama banyak. Berapa kue untuk setiap teman?',
+                        'Ibu membeli {a} permen dan memasukkannya ke dalam {b} kantong dengan jumlah sama. Berapa permen di setiap kantong?'
+                    ]
+                }
+            },
+            Sedang: {
+                label: 'Level Sedang',
+                multiplier: { min: 3, max: 10 },
+                divisor: { min: 2, max: 10 },
+                story: {
+                    multiply: [
+                        'Sebuah kelas memiliki {a} meja, setiap meja diisi {b} murid. Berapa murid total di kelas?',
+                        'Ada {a} keranjang jeruk, tiap keranjang berisi {b} jeruk. Berapa jeruk semuanya?',
+                        'Riza menanam {a} baris bunga, setiap baris ada {b} bunga. Berapa jumlah bunga yang tumbuh?'
+                    ],
+                    divide: [
+                        'Bapak membawa {a} botol minum dan ingin membagikannya ke {b} anak dengan jumlah sama. Berapa botol untuk setiap anak?',
+                        'Dek Zara menyusun {a} kertas dalam {b} tumpukan sama tinggi. Berapa kertas di tiap tumpukan?',
+                        'Ani punya {a} buah jeruk dan membaginya pada {b} teman. Berapa jeruk untuk setiap teman?'
+                    ]
+                }
+            },
+            Sulit: {
+                label: 'Level Sulit',
+                multiplier: { min: 5, max: 15 },
+                divisor: { min: 3, max: 12 },
+                story: {
+                    multiply: [
+                        'Sebuah perpustakaan menata {a} rak buku, setiap rak berisi {b} buku. Berapa buku yang dipajang?',
+                        'Rian mengumpulkan {a} kotak pensil, setiap kotak berisi {b} pensil. Berapa pensil total yang dikumpulkan?',
+                        'Taman bermain memiliki {a} baris ayunan, tiap baris {b} ayunan. Berapa ayunan di seluruh taman?'
+                    ],
+                    divide: [
+                        'Sebuah kelas akan membagi {a} kelereng ke {b} kelompok dengan jumlah sama. Berapa kelereng setiap kelompok?',
+                        'Toko buah menjual {a} buah persik dalam {b} kotak yang sama banyak. Berapa buah persik setiap kotak?',
+                        'Kakak memiliki {a} permen untuk dibagi ke {b} saudara. Berapa permen untuk setiap saudara?'
+                    ]
+                }
+            }
+        };
+
+        const questionCount = 10;
+        let currentLevel = null;
+        let questions = [];
+        let currentIndex = 0;
+        let score = 0;
+        let correctCount = 0;
+        let currentAnswer = null;
+
+        const selectedLevelEl = document.getElementById('selectedLevel');
+        const scoreEl = document.getElementById('score');
+        const questionCountEl = document.getElementById('questionCount');
+        const correctCountEl = document.getElementById('correctCount');
+        const progressTextEl = document.getElementById('progressText');
+        const questionTextEl = document.getElementById('questionText');
+        const feedbackTextEl = document.getElementById('feedbackText');
+        const gamePanel = document.getElementById('gamePanel');
+        const completedPanel = document.getElementById('completedPanel');
+        const levelSelection = document.getElementById('levelSelection');
+        const choiceButtons = [
+            document.getElementById('choice0'),
+            document.getElementById('choice1'),
+            document.getElementById('choice2'),
+            document.getElementById('choice3')
+        ];
+
+        function randomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function shuffle(array) {
+            return array.sort(() => Math.random() - 0.5);
+        }
+
+        function formatStory(template, a, b) {
+            return template.replace('{a}', a).replace('{b}', b);
+        }
+
+        function createQuestion(text, answer) {
+            const choices = new Set([answer]);
+            while (choices.size < 4) {
+                const variation = randomInt(1, Math.max(3, Math.floor(answer * 0.3) + 1));
+                const wrong = [answer + variation, answer - variation, answer + variation + 2][randomInt(0, 2)];
+                if (wrong >= 0) {
+                    choices.add(wrong);
+                }
+            }
+            return {
+                text,
+                answer,
+                choices: shuffle(Array.from(choices))
+            };
+        }
+
+        function generateQuestions(levelKey) {
+            const config = levelConfig[levelKey];
+            const list = [];
+            const multiplyTemplates = config.story.multiply;
+            const divideTemplates = config.story.divide;
+
+            for (let i = 0; i < questionCount / 2; i += 1) {
+                const a = randomInt(config.multiplier.min, config.multiplier.max);
+                const b = randomInt(config.multiplier.min, config.multiplier.max);
+                const template = multiplyTemplates[randomInt(0, multiplyTemplates.length - 1)];
+                list.push(createQuestion(formatStory(template, a, b), a * b));
+            }
+
+            for (let i = 0; i < questionCount / 2; i += 1) {
+                const divisor = randomInt(config.divisor.min, config.divisor.max);
+                const quotient = randomInt(config.divisor.min, config.divisor.max);
+                const dividend = divisor * quotient;
+                const template = divideTemplates[randomInt(0, divideTemplates.length - 1)];
+                list.push(createQuestion(formatStory(template, dividend, divisor), quotient));
+            }
+
+            return shuffle(list);
+        }
+
+        function selectLevel(levelKey) {
+            currentLevel = levelKey;
+            questions = generateQuestions(levelKey);
+            currentIndex = 0;
+            score = 0;
+            correctCount = 0;
+            currentAnswer = null;
+
+            selectedLevelEl.textContent = levelConfig[levelKey].label;
+            levelSelection.style.display = 'none';
+            gamePanel.classList.add('active');
+            completedPanel.classList.remove('active');
+            updateStats();
+            showQuestion();
+            feedbackTextEl.textContent = 'Mulai jawab soal dengan cerita di atas. Pilih jawaban yang tepat!';
+            feedbackTextEl.style.color = '#2d4a6b';
+        }
+
+        function updateStats() {
+            scoreEl.textContent = score;
+            correctCountEl.textContent = correctCount;
+            questionCountEl.textContent = `${Math.min(currentIndex + 1, questions.length)} / ${questions.length}`;
+        }
+
+        function showQuestion() {
+            const current = questions[currentIndex];
+            progressTextEl.textContent = `Soal ${currentIndex + 1} dari ${questions.length}`;
+            questionTextEl.textContent = current.text;
+            current.choices.forEach((choice, index) => {
+                choiceButtons[index].textContent = choice;
+                choiceButtons[index].disabled = false;
+            });
+            currentAnswer = current.answer;
+        }
+
+        function chooseAnswer(index) {
+            if (currentAnswer === null) {
+                return;
+            }
+            const selected = Number(choiceButtons[index].textContent);
+            const isCorrect = selected === currentAnswer;
+
+            if (isCorrect) {
+                score += 10;
+                correctCount += 1;
+                feedbackTextEl.textContent = 'Jawaban benar! Bagus sekali, lanjut ke soal berikutnya.';
+                feedbackTextEl.style.color = '#0f7a3f';
+            } else {
+                feedbackTextEl.textContent = `Sayang sekali, jawaban yang benar adalah ${currentAnswer}. Yuk coba soal berikutnya.`;
+                feedbackTextEl.style.color = '#be2d2d';
+            }
+
+            currentIndex += 1;
+            if (currentIndex >= questions.length) {
+                finishGame();
+                return;
+            }
+            updateStats();
+            showQuestion();
+        }
+
+        function finishGame() {
+            gamePanel.classList.remove('active');
+            completedPanel.classList.add('active');
+            const percent = Math.round((correctCount / questions.length) * 100);
+            document.getElementById('finalMessage').textContent = `Kamu telah menyelesaikan ${levelConfig[currentLevel].label} dengan skor ${score} dan ${correctCount} jawaban benar dari ${questions.length}. Nilai akhir ${percent}%!`;
+        }
+
+        function resetGame(showLevel = false) {
+            if (showLevel) {
+                levelSelection.style.display = 'grid';
+                gamePanel.classList.remove('active');
+                completedPanel.classList.remove('active');
+            }
+            currentLevel = null;
+            questions = [];
+            currentIndex = 0;
+            score = 0;
+            correctCount = 0;
+            currentAnswer = null;
+            selectedLevelEl.textContent = '-';
+            progressTextEl.textContent = 'Pilih level untuk mulai kuis.';
+            questionTextEl.textContent = 'Siap menjawab semua soal cerita matematika?';
+            feedbackTextEl.textContent = 'Semua soal dilengkapi cerita singkat supaya kamu belajar sambil berpikir.';
+            feedbackTextEl.style.color = '#2d4a6b';
+            scoreEl.textContent = '0';
+            correctCountEl.textContent = '0';
+            questionCountEl.textContent = `0 / ${questionCount}`;
+            choiceButtons.forEach(btn => {
+                btn.textContent = '-';
+                btn.disabled = true;
+            });
+        }
+
+        // Inisialisasi awal
+        resetGame(true);
+    </script>
+</body>
+</html>
